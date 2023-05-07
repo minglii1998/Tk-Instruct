@@ -237,6 +237,7 @@ class NITrainer(Seq2SeqTrainer):
 
         has_labels = "labels" in inputs
         inputs = self._prepare_inputs(inputs)
+        # print('inputs---------------------\n',self.tokenizer.batch_decode(inputs['input_ids']))
 
         # XXX: adapt synced_gpus for fairscale as well
         gen_kwargs = {
@@ -284,5 +285,9 @@ class NITrainer(Seq2SeqTrainer):
                 labels = self._pad_tensors_to_max_len(labels, gen_kwargs["max_length"])
         else:
             labels = None
+        # print('loss---------------------\n',loss)
+        # print('generated_tokens---------------------\n',self.tokenizer.batch_decode(generated_tokens))
+        # print('labels---------------------\n',self.tokenizer.batch_decode(labels))
+        
 
         return (loss, generated_tokens, labels)
